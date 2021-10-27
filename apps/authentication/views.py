@@ -24,10 +24,11 @@ def login_view(request):
                 login(request, user)
                 return redirect("/")
             else:
-                msg = 'Invalid credentials'
+                msg = 'El usuario y/o password son incorrectos'
         else:
-            msg = 'Error validating the form'
-
+            msg = 'Ocurrio un error. Intente nuevamente'
+    
+    #Plantilla ->
     return render(request, "accounts/login.html", {"form": form, "msg": msg})
 
 
@@ -49,7 +50,7 @@ def register_user(request):
             # return redirect("/login/")
 
         else:
-            msg = 'Form is not valid'
+            msg = 'Ocurrio un error. Intente nuevamente.'
     else:
         form = SignUpForm()
 

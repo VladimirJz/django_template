@@ -1,3 +1,5 @@
+        
+        <!-- Responsive View-->
         <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
             <a class="navbar-brand me-lg-5" href="/">
                 <img class="navbar-brand-dark" src="/static/assets/img/brand/light.svg" alt="Volt logo" /> <img class="navbar-brand-light" src="/static/assets/img/brand/dark.svg" alt="Volt logo" />
@@ -13,18 +15,22 @@
           <div class="sidebar-inner px-4 pt-3">
             <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
               <div class="d-flex align-items-center">
+                <!-- Avatar -->
                 <div class="avatar-lg me-4">
                   <img src="/static/assets/img/team/profile-picture-3.jpg" class="card-img-top rounded-circle border-white"
                     alt="Bonnie Green">
                 </div>
                 <div class="d-block">
-                  <h2 class="h5 mb-3">Hi, Jane</h2>
+                  <h2 class="h5 mb-3">Bienvenido, {{ request.user.username }}</h2>
+                  <!-- Cerrar Sesion-->
                   <a href="/page-sign-in.html" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
                     <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>            
-                    Sign Out
+                    Salir
                   </a>
+
                 </div>
               </div>
+
               <div class="collapse-close d-md-none">
                 <a href="#sidebarMenu" data-bs-toggle="collapse"
                     data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true"
@@ -33,6 +39,55 @@
                   </a>
               </div>
             </div>
+
+            <!-- Bara lateral -->
+            <!--agregar aqui opciones de menu
+            -->
+            <!-- Opcion Menu-->
+            <li class="nav-item {% if 'template_menu' in segment %} active {% endif %}">
+              <span
+                class="nav-link  collapsed  d-flex justify-content-between align-items-center"
+                data-bs-toggle="collapse" data-bs-target="#submenu-app">
+                <span>
+                  <span class="sidebar-icon">
+                    <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd"></path></svg>
+                  </span> 
+                  <span class="sidebar-text">Menu 1</span>
+                </span>
+                <!-- Arrow -->
+                <span class="link-arrow">
+                  <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                </span>
+              </span>
+              <!--Div Submenus-->
+              <div class="multi-level collapse {% if 'template_menu' in segment %} show {% endif %}"
+                role="list" id="submenu-app" aria-expanded="false">
+                <ul class="flex-column nav">
+                  <!-- Item Submenu-->
+                  <li class="nav-item {% if 'template_menu_1' in segment %} active {% endif %}">
+                    <a class="nav-link" href="/template_menu_1.html">
+                      <span class="sidebar-text">Submenu 1</span>
+                    </a>
+                  </li>
+
+                  <li class="nav-item {% if 'template_menu_2' in segment %} active {% endif %}">
+                    <a class="nav-link" href="/template_menu_2.html">
+                      <span class="sidebar-text">Submenu 2</span>
+                    </a>
+                  </li>
+
+
+                </ul>
+              </div>
+            </li>
+            <!-- Division-->
+            <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
+
+
+
+
+            <!-- ELIMINAR EL CODIGO DE AQUI HACIA ABAJO-->
+            <!-- Overview-->
             <ul class="nav flex-column pt-3 pt-md-0">
               <li class="nav-item">
                 <a href="/" class="nav-link d-flex align-items-center">
@@ -42,6 +97,7 @@
                   <span class="mt-1 ms-1 sidebar-text">Volt Overview</span>
                 </a>
               </li>
+              <!-- Dashboard -->
               <li class="nav-item {% if 'dashboard' in segment %} active {% endif %}">
                 <a href="/dashboard.html" class="nav-link">
                   <span class="sidebar-icon">
@@ -50,6 +106,8 @@
                   <span class="sidebar-text">Dashboard</span>
                 </a>
               </li>
+
+              <!-- Transactions-->
               <li class="nav-item {% if 'transactions' in segment %} active {% endif %}">
                 <a href="/transactions.html" class="nav-link">
                   <span class="sidebar-icon">
@@ -58,6 +116,7 @@
                   <span class="sidebar-text">Transactions</span>
                 </a>
               </li>
+              <!-- Sett -->
               <li class="nav-item {% if 'settings' in segment %} active {% endif %}">
                 <a href="/settings.html" class="nav-link">
                   <span class="sidebar-icon">
@@ -66,6 +125,7 @@
                   <span class="sidebar-text">Settings</span>
                 </a>
               </li>
+              <!-- Tables-->
               <li class="nav-item {% if 'tables-bootstrap-' in segment %} active {% endif %}">
                 <span
                   class="nav-link  collapsed  d-flex justify-content-between align-items-center"
@@ -91,6 +151,7 @@
                   </ul>
                 </div>
               </li>
+              <!--Pages Example -->
               <li class="nav-item {% if 'page-' in segment %} active {% endif %}">
                 <span
                   class="nav-link  collapsed  d-flex justify-content-between align-items-center"

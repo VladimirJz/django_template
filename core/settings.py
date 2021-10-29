@@ -15,8 +15,8 @@ CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
-
+# DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = True
 # load production server from .env
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
 
@@ -29,8 +29,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.home'  # Enable the inner home (home)
-]
+    'apps.home',  # Enable the inner home (home)
+   'apps.backups',
+   'django.contrib.humanize',
+   ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,11 +71,20 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dba',
+        'USER': 'root',
+        'PASSWORD': 'Vostro1310',
+        'HOST': '10.186.2.132',
+        'PORT': '3306',
+           'OPTIONS': {
+                'charset' : 'utf8mb4',
+              
+            },
+ }
 }
 
 # Password validation

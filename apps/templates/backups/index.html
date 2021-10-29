@@ -1,0 +1,114 @@
+{% extends "layouts/base.html" %}
+{% load humanize %}
+{% block title %} Inicio {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+   <div class="row justify-content-md-center">
+    <div class="col-12 mb-4">
+       <!-- <div class="card bg-yellow-alt shadow-sm">
+            <div class="card-header d-flex flex-row align-items-center flex-0">
+                
+                    <div class="d-block">
+                    
+                </div>
+                <div class="d-flex ml-auto">
+                  
+                </div> -
+            </div>
+            
+            </div> -->
+    </div>
+    
+    <div class="card-body p-2"></div>
+    <!-- info card-->
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-light shadow-sm">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="d-sm-none">
+                            <h2 class="h5">Total Backups:</h2>
+                            <h3 class="mb-1">{{num_backups}}</h3>
+                        </div> 
+                    </div>
+                    <div class="col-12 col-xl-7 px-xl-0">
+                        <div class="d-none d-sm-block">
+                            <h2 class="h5">Total Backups:</h2>
+                            <h3 class="mb-1">{{num_backups}}</h3>
+                        </div>
+                       <!-- <small>Feb 1 - Apr 1,  <span class="icon icon-small"><span class="fas fa-globe-europe"></span></span> WorldWide</small> 
+                        <div class="small mt-2">                               
+                            <span class="fas fa-angle-up text-success"></span>                                   
+                            <span class="text-success font-weight-bold">18.2%</span> Since last month
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- info card-->
+    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-light shadow-sm">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="d-sm-none">
+                            <h2 class="h5"> Backups Disponibles:</h2>
+                            <h3 class="mb-1">{{ok_backups}}</h3>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-7 px-xl-0">
+                        <div class="d-none d-sm-block">
+                            <h2 class="h5"> Backups Disponibles:</h2>
+                            <h3 class="mb-1">{{ok_backups}}</h3>
+                        </div>
+                        <!-- <small>Feb 1 - Apr 1,  <span class="icon icon-small"><span class="fas fa-globe-europe"></span></span> Worldwide</small>
+                        <div class="small mt-2">                               
+                            <span class="fas fa-angle-up text-success"></span>                                   
+                            <span class="text-success font-weight-bold">28.2%</span> Since last month
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- info card-->
+     <!-- info card-->
+     <div class="col-12 col-sm-6 col-xl-4 mb-4">
+        <div class="card border-light shadow-sm">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-left">
+                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                        <div class="d-sm-none">
+                            <h2 class="h5"> Almacenamiento:</h2>
+                            <<h3 class="mb-1">{{data_size}}</h3>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-7 px-xl-0">
+                        <div class="d-none d-sm-block">
+                            <h2 class="h5"> Almacenamiento:</h2>
+                            <h3 class="mb-1">{{data_size|intcomma}} GB</h3>
+                        </div>
+                        <!-- <small>Feb 1 - Apr 1,  <span class="icon icon-small"><span class="fas fa-globe-europe"></span></span> Worldwide</small>
+                        <div class="small mt-2">                               
+                            <span class="fas fa-angle-up text-success"></span>                                   
+                            <span class="text-success font-weight-bold">28.2%</span> Since last month
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

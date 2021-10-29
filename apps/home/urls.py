@@ -12,6 +12,8 @@ urlpatterns = [
     path('', views.index, name='home'),
 
     # Matches any html file
-    re_path(r'^.*\.*', views.pages, name='pages'),
+    # This redirec all routes /** to view function
+    # 
+    #re_path(r'^.*\.*', views.pages, name='pages'),
 
 ]

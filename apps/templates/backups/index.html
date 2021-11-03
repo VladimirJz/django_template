@@ -6,7 +6,8 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-
+{{context}}
+<h5>Listado Backups</h5>
    <div class="row justify-content-md-center">
     <div class="col-12 mb-4">
        <!-- <div class="card bg-yellow-alt shadow-sm">
@@ -31,7 +32,7 @@
                 <div class="row d-block d-xl-flex align-items-center">
                     <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
                         <div class="d-sm-none">
-                            <h2 class="h5">Total Backups:</h2>
+                            <h2 class="h5">Total Backupss:</h2>
                             <h3 class="mb-1">{{num_backups}}</h3>
                         </div> 
                     </div>
@@ -107,7 +108,80 @@
 </div>
 
 
+<!-- Tabla-->
+<div class="py-4">
 
+    <div class="card border-0 shadow mb-6">
+    <div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-centered table-nowrap mb-0 rounded hover">
+            <thead class="thead-light">
+                <tr>
+                    <th class="border-0 rounded-start">#</th>
+                    <th class="border-0">Fecha de Creación</th>
+                    <th class="border-0">Backup</th>
+                    <th class="border-0">Ubicación</th>
+                    <th class="border-0">Estatus</th>
+                    <th class="border-0">Comentarios</th>
+                    <th class="border-0 rounded-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Item -->
+                {% for Backups in backups_list %}
+               
+                <tr  >
+                    <td>{{ Backups.id }}</td>
+                    <td>{{ Backups.CreationDate }}</td>
+                    <td>{{ Backups.FileName }}</td>
+                    <td>{{ Backups.Location__LocationName }}</td>
+                    {% if Backups.Status_id > 1 %}
+                    <td class='text-danger'>{{ Backups.Status__Description }}</td>
+                    {% else %}
+                    <td >{{ Backups.Status__Description }}</td>
+                    {% endif %}
+                    <td>{{ Backups.Comments|truncatechars:34 }}</td>
+                    <td>Edit/View</td>
+                   
+
+                   
+                </tr>
+                {% endfor %}
+                   
+            </tbody>
+        </table>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination mb-0">
+        <li class="page-item">
+            <a class="page-link" href="#">Previous</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item active">
+            <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">4</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">5</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>  
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->

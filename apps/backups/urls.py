@@ -5,13 +5,13 @@ Copyright (c) 2019 - present AppSeed.us
 
 from django.urls import path, re_path
 from apps.backups import views
-from apps.backups.views import listbackups
+from apps.backups.views import index 
 
 urlpatterns = [
 
     # The home page
-    path('backups/', views.index, name='backups'),
-
-    path('backups2/', listbackups.as_view()),
+    #path('backups/', views.index, name='backups'),
+    path('backups/',index.as_view()),
+    #path('backups2/', listbackups.as_view()),
 
 ]

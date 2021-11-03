@@ -1,0 +1,46 @@
+{% extends "layouts/base.html" %}
+{% load humanize %}
+{% block title %} Inicio {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="py-4">
+
+    <div class="card border-0 shadow mb-4">
+    <div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-centered table-nowrap mb-0 rounded hover">
+            <thead class="thead-light">
+                <tr>
+                    <th class="border-0 rounded-start">#</th>
+                    <th class="border-0">Fecha de Creación</th>
+                    <th class="border-0">Backup</th>
+                    <th class="border-0">Ubicación</th>
+                    <th class="border-0 rounded-end">Comentarios</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Item -->
+                {% for Backups in backups_list %}
+                <tr>
+                    <td>{{ Backups.id }}</td>
+                    <td>{{ Backups.CreationDate }}</td>
+                    <td>{{ Backups.FileName }}</td>
+                    <td>{{ Backups.Location__LocationName }}</td>
+                    <td>{{ Backups.Comments }}</td>
+                   
+
+                   
+                </tr>
+                {% endfor %}
+                   
+            </tbody>
+        </table>
+    </div>
+    </div>
+    </div>
+</div>
+
+{% endblock %}

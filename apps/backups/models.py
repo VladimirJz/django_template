@@ -37,7 +37,7 @@ class Backups(models.Model):
     Database=models.ForeignKey(Databases,on_delete=models.SET_NULL,null=True);
     Job=models.ForeignKey(Jobs,on_delete=models.SET_NULL,null=True);
     Status=models.ForeignKey(Status,on_delete=models.SET_NULL,null=True);
-    Location=models.ForeignKey(Locations,on_delete=models.SET_NULL,null=True);
+    Location=models.ForeignKey(Locations,related_name='backup_location',on_delete=models.SET_NULL,null=True);
     CreationDate=models.DateField(null=True,blank=True,help_text='Fecha de Creación');
     StartBackup=models.DateTimeField(null=True,blank=True,help_text='Inicio de generación del backup');
     EndBackup=models.DateTimeField(null=True,blank=True,help_text='Terminación del Backup');

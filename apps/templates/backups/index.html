@@ -136,11 +136,19 @@
                     <td>{{ Backups.FileName }}</td>
                     <td>{{ Backups.Location__LocationName }}</td>
                     {% if Backups.Status_id > 1 %}
-                    <td class='text-danger'>{{ Backups.Status__Description }}</td>
+                    <td class='text-danger'>{{ Backups.Status__Description }}
+                        
+                    </td>
                     {% else %}
                     <td >{{ Backups.Status__Description }}</td>
                     {% endif %}
-                    <td>{{ Backups.Comments|truncatechars:34 }}</td>
+                    <td>{{ Backups.Comments|truncatechars:34 }}
+                        {% if Backups.Status_id > 1 %}
+                            <button type="link" class="btn  text-info me-3" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{Backups.Comments}}" >
+                                ?
+                            </button>
+                        {% endif %}
+                    </td>
                     <td>Edit/View</td>
                    
 

@@ -1,0 +1,57 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+
+
+{% block title %} Inicio {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %} 
+
+<form action="" method="post">
+    {% csrf_token %}
+{{ form.non_field_errors }}
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card border-0 shadow components-section">
+            <div class="card-body">
+            <div class="col-lg-5 col-sm-6">
+                
+                {{ form.Rule.errors }}
+                <label for="{{ form.Rule.id_for_label }}" class="form-label" >Regla: {{Rule.help_text}} </label>
+                {{ form.Rule | add_class:"form-control"   }}
+                
+                {{ form.Order.errors }}
+                <label for="{{ form.Order.id_for_label }}">Orden:</label>
+                {{ form.Order | add_class:"form-control" }}
+                
+                
+                {{ form.Status.errors }}
+                <label for="{{ form.Status.id_for_label }}">Estatus:</label>
+                {{ form.Status | add_class:"form-control" }}
+                
+                {{ form.RetentionDays.errors }}
+                <label for="{{ form.RetentionDays.id_for_label }}">Dias de Retención:</label>
+                {{ form.RetentionDays | add_class:"form-control" }}
+
+                {{ form.FileFormat.errors }}
+                <label for="{{ form.FileFormat.id_for_label }}">Formato:</label>
+                {{ form.FileFormat | add_class:"form-control" }}
+
+                {{ form.Location.errors }}
+                <label for="{{ form.FileFormat.id_for_label }}">Ubicación:</label>
+                {{ form.Location | add_class:"form-control" }}
+
+                <button class="btn btn-gray-800 mt-2 animate-up-2" type="submit"  value="Submit">Guardar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

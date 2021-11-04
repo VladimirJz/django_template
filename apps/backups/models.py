@@ -1,6 +1,7 @@
+from typing import Tuple
 from django.db import models
 from django.db.models.deletion import CASCADE
-from django.db.models.fields import CharField, DateTimeField
+from django.db.models.fields import CharField, DateTimeField, SmallIntegerField
 from django.db.models.fields.related import ForeignKey
 
 # Create your models here.
@@ -27,7 +28,11 @@ class Jobs(models.Model):
 
 class Locations(models.Model):
     LocationName=models.CharField(max_length=50,help_text='Nombre de la Ubicación');
-    FilesPath=models.CharField(max_length=200,help_text='Ubicación fisica')    
+    FilesPath=models.CharField(max_length=200,help_text='Ubicación fisica')  ;  
+     
+    def __str__(self):
+        return self.LocationName
+
 
 class Status(models.Model):
     Status=models.CharField(max_length=20,help_text='Estatus');
@@ -48,4 +53,14 @@ class Backups(models.Model):
 
     def __str__(self):
             return self.FileName
+
+class Rotation(models.Model):
+    Job=models.ForeignKey(Jobs,on_delete=models.SET_NULL,null=True);
+    Order=SmallIntegerField(help_text='No.Regla');
+    Rule=CharField(help_text="Nombre de la regla",max_length=40,null=False);
+    RULE_STATUS = [(1, 'Activa'),(2, 'Inactiva'),];
+    Status= models.SmallIntegerField(choices=RULE_STATUS,default=1);
+    Location=models.ForeignKey(Locations,related_name='rotation_location',on_delete=models.SET_NULL,null=True);
+    RetentionDays=SmallIntegerField(help_text='Dias de retención',null=False);
+    FileFormat=CharField(max_length=6,help_text='Formato del backup', null=False);
 

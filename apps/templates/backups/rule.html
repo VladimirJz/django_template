@@ -9,14 +9,29 @@
 
 {% block content %} 
 
-<form action="" method="post">
+<form action="" method="POST">
     {% csrf_token %}
-{{ form.non_field_errors }}
-<div class="row">
-    <div class="col-12 mb-4">
-        <div class="card border-0 shadow components-section">
-            <div class="card-body">
-            <div class="col-lg-5 col-sm-6">
+
+
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+                {{ form.Job.errors }}
+                <label for="{{ form.Job.id_for_label }}">Job:</label>
+                {{ form.Job | add_class:"form-select" }}
                 
                 {{ form.Rule.errors }}
                 <label for="{{ form.Rule.id_for_label }}" class="form-label" >Regla: {{Rule.help_text}} </label>
@@ -40,8 +55,8 @@
                 {{ form.FileFormat | add_class:"form-control" }}
 
                 {{ form.Location.errors }}
-                <label for="{{ form.FileFormat.id_for_label }}">Ubicación:</label>
-                {{ form.Location | add_class:"form-control" }}
+                <label for="{{ form.Location.id_for_label }}">Ubicación:</label>
+                {{ form.Location | add_class:"form-select" }}
 
                 <button class="btn btn-gray-800 mt-2 animate-up-2" type="submit"  value="Submit">Guardar</button>
             </div>

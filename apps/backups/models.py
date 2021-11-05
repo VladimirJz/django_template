@@ -25,6 +25,8 @@ class Databases(models.Model):
 
 class Jobs(models.Model):
     JobName=models.CharField(max_length=50,help_text='Nombre del la Rutina');
+    def __str__(self):
+        return self.JobName
 
 class Locations(models.Model):
     LocationName=models.CharField(max_length=50,help_text='Nombre de la Ubicación');

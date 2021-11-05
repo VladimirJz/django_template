@@ -35,8 +35,9 @@ def index2(request):
 class index(ListView):
     model=Backups
     context_object_name ='backups_list'
-    queryset =  Backups.objects.filter(Size__isnull=False).values('id','Comments','Location__LocationName','FileName','Size','Comments','CreationDate','Status__Description','Status_id').order_by('-id')[:10]
+    queryset =  Backups.objects.filter(Size__isnull=False).values('id','Comments','Location__LocationName','FileName','Size','Comments','CreationDate','Status__Description','Status_id').order_by('-id')
     template_name='backups/index.html'
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -63,10 +64,11 @@ def rule_new(request):
     context = {'app':app,'view':view}
     if request.method == "POST":
         form = RotationForm(request.POST)
+      
         if form.is_valid():
             #conductor = form.save(commit=False)
             form.save()
-            #return render(request, 'backups/rule.html', {'form': form})
+            return render(request, 'backups/success.html', {'form': form})
         else:
             return render(request, 'backups/rule.html', {'form': form})
     else:

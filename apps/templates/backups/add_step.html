@@ -1,0 +1,66 @@
+{% extends "layouts/base.html" %}
+{% load humanize %}
+{% block title %} Inicio {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% load static%}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type='text/javascript' src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'jquery.formset.js' %}"></script>
+
+
+    <h1>Add a new step</h1>
+    <form id="form-container" method="POST">
+        <div class="table-responsive">
+        <table class="table  table-sm table-centered table-nowrap mb-0 rounded hover">
+        <thead class="thead-light">
+        
+        <TABLE>
+        {% csrf_token %}
+        {{step_formset.management_form}}
+        {% for form in step_formset %}
+        <tr class="formset_row">
+            {% for field in form.visible_fields %}
+            <td >
+                {# Include the hidden fields in the form #}
+                {% if forloop.first %}
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                {% endif %}
+                {{ field.errors.as_ul }}
+                {{ field }}
+            </td>
+            {% endfor %}
+        </tr>
+    </TABLE>
+</table>
+</div>
+
+        {% endfor %}
+        <button id="add-form" type="button">Add Another Step</button>
+        <button type="submit">Create Step</button>
+    </form>
+   
+ 
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script type="text/javascript">
+    $('.formset_row').formset({
+        addText: 'Agregar un nuevo paso',
+        deleteText: 'Eliminar',
+        prefix: 'familymember_set'
+    });
+</script>
+{% endblock javascripts %}

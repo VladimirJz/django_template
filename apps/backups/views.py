@@ -1,14 +1,27 @@
 from django.shortcuts import render
 from django import template
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, request
 from django.template import loader
 from django.urls import reverse
 
-from apps.backups.forms import RotationForm
-from .models import Backups, Status,Locations
+from apps.backups.forms import RotationForm, BaseRotationFormSet, StepForm,step_form, StepsFormSet
+from django.forms.formsets import BaseFormSet
+
+from .models import Backups, Status,Locations,Rotation
 from django.db.models import Sum
-from django.views.generic import ListView
+from django.views.generic import ListView,TemplateView
+
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+#from django.core.urlresolvers import reverse
+from django.db import IntegrityError, transaction
+from django.forms.formsets import formset_factory
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+
+
+
 
 @login_required(login_url="/login/")
 def index2(request):
@@ -74,3 +87,72 @@ def rule_new(request):
     else:
         form = RotationForm()
     return render(request, 'backups/rule.html', {'form': form,'app':app,'view':view})
+
+
+
+def rotation_rules(request):
+    rotation_formset=formset_factory(StepForm,formset=BaseRotationFormSet)
+    current_steps=Rotation.objects.filter(Job=1).order_by('Order')
+    if current_steps:
+        steps_detail=[{'job': l.Job_id, 'order': l.Order,'rule':l.Rule,'status_step':l.Status,'location':l.Location_id,'retentention_days':l.RetentionDays,'file_format':l.FileFormat} 
+                    for l in current_steps]
+    else:
+        steps_detail=[{'job': 0, 'order':1,'rule':'','status_step':1,'location':1,'retentention_days':0,'file_format':'.bak'} ]
+
+    if request.method=='POST':
+        steps_forms= rotation_formset(request.POST)
+        if steps_forms.is_valid():
+            new_steps=[]
+            for step_form in steps_forms:
+                job=step_form.cleaned_data.get('job')
+                order=step_form.cleaned_data.get('order')
+                rule=step_form.cleaned_data.get('rule')
+                status=step_form.cleaned_data.get('status_step')
+                location=step_form.cleaned_data.get('location')
+                retention=step_form.cleaned_data.get('retention_days')
+                file_format=step_form.cleaned_data.get('file_format')
+                new_steps.append(Rotation(Job=job,Order=order,Rule=rule,Status=status,Location=location,RetentionDays=retention,FileForma=file_format))
+
+            try:
+                with transaction.atomic():
+                    #Rotation.objects.filter(Job=1).delete()
+                    #Rotation.objects.bulk_create(new_steps)
+                    messages.success(request, 'Job Actualizado')
+            except IntegrityError: #If the transaction failed
+                messages.error(request, 'Ocurrio un error.')
+                return redirect(reverse('profile-settings'))
+
+
+    else: # get
+        steps_forms=rotation_formset(initial=steps_detail)
+    
+    context={'steps_forms':steps_forms}
+    
+    return render(request, 'backups/job_steps.html', context)
+
+
+
+class steps_listview(ListView):
+    model=Rotation
+    template_name='backups/step_list.html'
+
+
+class StepAddView(TemplateView):
+    template_name = "backups/add_step.html"
+
+    # Define method to handle GET request
+    def get(self, *args, **kwargs):
+        # Create an instance of the formset
+        formset = StepsFormSet(queryset=Rotation.objects.filter(Job=0).order_by('Order'))
+        return self.render_to_response({'step_formset': formset})
+    
+    def post(self, *args, **kwargs):
+
+        formset = StepsFormSet(data=self.request.POST)
+
+        # Check if submitted forms are valid
+        if formset.is_valid():
+            formset.save()
+            return redirect(reverse_lazy("step_list"))
+
+        return self.render_to_response({'step_formset': formset})

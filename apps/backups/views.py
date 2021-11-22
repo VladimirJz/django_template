@@ -8,9 +8,9 @@ from django.urls import reverse
 from apps.backups.forms import RotationForm, BaseRotationFormSet, StepForm,step_form, StepsFormSet
 from django.forms.formsets import BaseFormSet
 
-from .models import Backups, Status,Locations,Rotation
+from .models import Backups, Status,Locations,Rotation,Jobs
 from django.db.models import Sum
-from django.views.generic import ListView,TemplateView
+from django.views.generic import ListView,TemplateView,DetailView
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -68,6 +68,25 @@ class index(ListView):
         context['ok_backups']= ok_backups
         context['data_size']=data_size
         return context
+
+
+class jobs(ListView):
+    model=Jobs
+    context_object_name ='jobs_list'
+    queryset =  Jobs.objects.all()
+    template_name='backups/jobs.html'
+#paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in 
+        app='backups'
+        view='jobs'
+        context ['app']=app
+        context['view']=view
+        return context
+
 
 
 
@@ -143,16 +162,18 @@ class StepAddView(TemplateView):
     # Define method to handle GET request
     def get(self, *args, **kwargs):
         # Create an instance of the formset
-        formset = StepsFormSet(queryset=Rotation.objects.filter(Job=0).order_by('Order'))
+        formset = StepsFormSet(queryset=Rotation.objects.filter(Job=self.kwargs['pk']).order_by('Order'))
         return self.render_to_response({'step_formset': formset})
     
     def post(self, *args, **kwargs):
 
         formset = StepsFormSet(data=self.request.POST)
-
+        #
         # Check if submitted forms are valid
         if formset.is_valid():
+            
             formset.save()
             return redirect(reverse_lazy("step_list"))
-
+        else:
+            formset.clean()
         return self.render_to_response({'step_formset': formset})

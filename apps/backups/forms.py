@@ -69,8 +69,13 @@ class BaseRotationFormSet(BaseFormSet):
 class step_form(ModelForm):
     class Meta:
       model  = Rotation
-      fields = ["Job", "Order","Rule","Status","Location","RetentionDays","FileFormat"]
+      fields = ["Job","Order","Rule","Status","Location","RetentionDays","FileFormat"]
+      widgets = {'Job': forms.TextInput(attrs={'type': 'hidden'})}
+
+
+    
+
 
 StepsFormSet = modelformset_factory(Rotation, 
-            fields=("Job", "Order","Rule","Status","Location","RetentionDays","FileFormat")
+            fields=("Order","Rule","Status","Location","RetentionDays","FileFormat")
             , extra=1)

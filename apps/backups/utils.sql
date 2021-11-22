@@ -6,3 +6,9 @@ BACKUPS
 
 
 
+ 
+{% #if forloop.first %}
+    {% #for hidden in form.hidden_fields %}
+        {{ #hidden }}
+    {% #endfor %}
+{% #endif %}
